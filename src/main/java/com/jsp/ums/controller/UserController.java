@@ -1,8 +1,11 @@
 package com.jsp.ums.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +17,8 @@ import com.jsp.ums.requestdto.UserRequest;
 import com.jsp.ums.responcedto.UserResponce;
 import com.jsp.ums.service.UserService;
 import com.jsp.ums.util.ResponceStructure;
+
+import jakarta.validation.Valid;
 
 @RestController
 public class UserController {
@@ -30,7 +35,7 @@ public class UserController {
 //	}
 
 	@PostMapping("/user")
-	public ResponseEntity<ResponceStructure<UserResponce>> saveUser(@RequestBody UserRequest userRequest) {
+	public ResponseEntity<ResponceStructure<UserResponce>> saveUser(@RequestBody @Valid UserRequest userRequest) {
 
 		return userService.saveUser(userRequest);
 	}
@@ -49,9 +54,13 @@ public class UserController {
 		
 		return userService.deleteById(userId);
 	}
-//	public List<User> getAllUser(){
-//		 List<User> user=userService.getAllUser();
-//		
-//		return  user;
-//	}
+	
+	@GetMapping("/user")
+	public ResponseEntity<ResponceStructure<List<UserResponce>>> getAllUser(User user){
+		
+		return  userService.getAllUser(user);
+	}
+	
+	
+	
 }

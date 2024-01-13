@@ -1,5 +1,7 @@
 package com.jsp.ums.service;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.jsp.ums.entity.User;
@@ -17,6 +19,10 @@ public interface UserService {
 	public ResponseEntity<ResponceStructure<UserResponce>> updateById(int userId, User user);
 
 	public ResponseEntity<ResponceStructure<UserResponce>> deleteById(int userId);
+
+	public ResponseEntity<ResponceStructure<List<UserResponce>>> getAllUser(User user);
+
+	
 
 
 
