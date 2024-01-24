@@ -2,15 +2,12 @@ package com.jsp.ums.serviceimple;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.jsp.ums.entity.User;
 import com.jsp.ums.repo.UserRepo;
@@ -31,6 +28,9 @@ public class UserServiceImpl implements UserService {
 	// get All Data
 	@Autowired
 	private ResponceStructure<List<UserResponce>> listStructure;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	// 1st Way
 //	@Override
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
 	public ResponseEntity<ResponceStructure<List<UserResponce>>> getAllUser(User user) {
 		List<User> findAll = userRepo.findAll();
 
-		//to get All Data ,otherwise only one data will come
+		// to get All Data ,otherwise only one data will come
 		List<UserResponce> responces = new ArrayList<>();
 		for (User user1 : findAll) {
 			UserResponce userResponce = mapToUserResponce(user1);
@@ -103,13 +103,14 @@ public class UserServiceImpl implements UserService {
 		}
 		return new ResponseEntity<ResponceStructure<List<UserResponce>>>(listStructure, HttpStatus.OK);
 	}
-
+//here password is used  to save the password in encoded form in dataBase
 	private User mapToUserRequest(UserRequest request) {
-		return User.builder().userEmail(request.getUserEmail()).userName(request.getUserName()).build();
+		return User.builder().userEmail(request.getUserEmail()).userName(request.getUserName())
+				.password(passwordEncoder.encode(request.getPassword())).build();
 	}
 
 	private UserResponce mapToUserResponce(User user) {
-		return UserResponce.builder().userEmail(user.getUserEmail()).build();
+		return UserResponce.builder().userEmail(user.getUserEmail()).userId(user.getUserId()).build();
 	}
 
 }

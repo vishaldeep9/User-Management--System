@@ -11,5 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserResponce {
 	private String userEmail;
-
+ 
+	private int userId;
+	
 }

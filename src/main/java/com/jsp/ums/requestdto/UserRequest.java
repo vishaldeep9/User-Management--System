@@ -21,5 +21,6 @@ public class UserRequest {
 	@NotBlank(message="userName cannot be blank")
 	private String userName;
 
+	private String password;
 
 }

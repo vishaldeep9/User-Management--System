@@ -30,6 +30,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 //		
 //	}
 
+	//it any constraint doesnot follow then this will triggered
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -46,6 +47,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         
 	}
 
+	//in this format we want exception
 	private ResponseEntity<Object> structure(HttpStatus status, String message, Object rootCause) {
 
 		// When they are limited then we can directly use map.of()
@@ -53,6 +55,8 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 				status);
 	}
 
+	
+	//here we are Handling exception
 	@ExceptionHandler(UserNotFoundByIdException.class)
 	public ResponseEntity<Object> handleUserNotFoundById(UserNotFoundByIdException ex) {
 
